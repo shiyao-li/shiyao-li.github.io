@@ -1,181 +1,86 @@
-/* Base link styles */
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 800px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Font faces */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
+}
+
+/* Typography */
+body, td, th, tr, p, a {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+strong {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+heading {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 22px;
+  display: block;
+}
+
+papertitle {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+name {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 32px;
+}
+
+/* Links */
 a {
   color: #1772d0;
   text-decoration: none;
 }
 
-/* Link hover and focus states */
-a:focus,
-a:hover {
+a:focus, a:hover {
   color: #f09228;
   text-decoration: none;
 }
 
-/* Base typography settings */
-body,
-td,
-th,
-tr,
-p,
-a {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-/* Strong text styling */
-strong {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-/* Section heading styles */
-heading {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 20px;
-  display: block;
-  margin: 5px 0;
-}
-
-/* Paper title styles */
-papertitle {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;  
-  font-weight: 700;
-}
-
-/* Name title styles */
-name {
-  font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 28px;  
-}
-
-/* Global table settings */
-table {
-  max-width: 1000px !important;
-  margin: 0 auto !important;
-}
-
-/* Video element styles */
+/* Videos */
 video {
-  width: 280px !important;
-  height: auto !important;
   display: block;
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
 }
 
-/* Reduce spacing above Research section */
-table[style*="border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"] + table {
-  margin-top: -10px !important;  
-}
-
-/* Tablet layout styles (max-width: 1024px) */
-@media only screen and (max-width: 1024px) {
+/* Mobile optimization */
+@media only screen and (max-width: 800px) {
   body {
-    padding: 15px;
+    -webkit-text-size-adjust: none;
   }
   
-  /* Adjust table width for tablet */
   table {
-    width: 95% !important;
-    margin: 0 auto !important;
+    width: 800px !important;
   }
   
-  /* Keep bio section side by side */
-  td[style*="width:63%"],
-  td[style*="width:40%"] {
-    display: table-cell !important;
-    vertical-align: middle !important;
+  td {
+    width: auto !important;
   }
   
-  td[style*="width:63%"] {
-    width: 60% !important;
-  }
-  
-  td[style*="width:40%"] {
-    width: 40% !important;
-  }
-  
-  /* Center and resize profile photo */
-  img[alt="photo"] {
-    width: 200px !important;
-    margin: 0 auto !important;
-    display: block;
-  }
-}
-
-/* Mobile layout styles (max-width: 768px) */
-@media only screen and (max-width: 768px) {
-  /* Keep research items side by side */
-  td[style*="width:25%"],
-  td[style*="width:75%"] {
-    display: table-cell !important;
-    padding: 10px !important;  
-  }
-
-  td[style*="width:25%"] {
-    width: 40% !important;
-  }
-
-  td[style*="width:75%"] {
-    width: 60% !important;
-  }
-  
-  /* Adjust video size for mobile */
-  video {
-    width: 100% !important;
-    max-width: 280px !important;
-    margin: 0 auto !important;
-    display: block;
-  }
-  
-  /* Reduce text size on mobile */
-  p, a, td {
-    font-size: 13px !important; 
-  }
-  
-  /* Adjust name size on mobile */
-  name {
-    font-size: 24px !important; 
-  }
-  
-  /* Adjust heading size on mobile */
-  heading {
-    font-size: 18px !important;  
-  }
-  
-  /* Space out navigation links on mobile */
-  p[style*="text-align:center"] a {
-    display: inline-block;
-    margin: 5px 10px;
-  }
-}
-
-/* Desktop layout styles (min-width: 1025px) */
-@media only screen and (min-width: 1025px) {
-  table {
-    width: 90% !important;
-  }
-  
-  /* Set research video column width */
-  td[style*="width:25%"] {
-    width: 35% !important;
-    padding-right: 20px !important;
-  }
-  
-  /* Set research text column width */
-  td[style*="width:75%"] {
-    width: 65% !important;
-  }
-  
-  /* Set video size for desktop */
-  video {
-    width: 100% !important;
-    max-width: 350px !important;
-  }
-}
-
-/* Print styles */
-@media print {
-  body {
-    font-size: 12pt;
+  img, video {
+    max-width: 100%;
+    height: auto;
   }
 }
