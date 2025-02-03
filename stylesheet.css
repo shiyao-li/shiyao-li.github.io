@@ -73,81 +73,79 @@ table[style*="border:0px;border-spacing:0px;border-collapse:separate;margin-righ
     padding: 15px;
   }
   
+  /* Adjust table width for tablet */
   table {
     width: 95% !important;
     margin: 0 auto !important;
   }
   
+  /* Keep bio section side by side */
   td[style*="width:63%"],
   td[style*="width:40%"] {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    text-align: center;
+    display: table-cell !important;
+    vertical-align: middle !important;
   }
   
+  td[style*="width:63%"] {
+    width: 60% !important;
+  }
+  
+  td[style*="width:40%"] {
+    width: 40% !important;
+  }
+  
+  /* Center and resize profile photo */
   img[alt="photo"] {
     width: 200px !important;
-    margin: 20px auto !important;
+    margin: 0 auto !important;
     display: block;
   }
 }
 
 /* Mobile layout styles (max-width: 768px) */
 @media only screen and (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-
-  /* Improve mobile layout for research section */
+  /* Keep research items side by side */
   td[style*="width:25%"],
   td[style*="width:75%"] {
-    display: block !important;
-    width: 100% !important;
-    padding: 10px 15px !important;  /* Consistent padding */
-    text-align: left !important;
+    display: table-cell !important;
+    padding: 10px !important;  
   }
-  
-  /* Fix video display on mobile */
+
   td[style*="width:25%"] {
-    text-align: center !important;
+    width: 40% !important;
+  }
+
+  td[style*="width:75%"] {
+    width: 60% !important;
   }
   
+  /* Adjust video size for mobile */
   video {
-    width: 280px !important;  /* Fixed width for consistency */
-    max-width: 100% !important;
-    height: auto !important;
+    width: 100% !important;
+    max-width: 280px !important;
     margin: 0 auto !important;
     display: block;
   }
   
-  /* Text adjustments */
+  /* Reduce text size on mobile */
   p, a, td {
     font-size: 13px !important; 
   }
   
+  /* Adjust name size on mobile */
   name {
     font-size: 24px !important; 
   }
   
+  /* Adjust heading size on mobile */
   heading {
-    font-size: 18px !important;
-    padding: 0 15px !important;
+    font-size: 18px !important;  
   }
   
-  /* Navigation links */
+  /* Space out navigation links on mobile */
   p[style*="text-align:center"] a {
     display: inline-block;
-    margin: 5px 8px !important;
-  }
-
-  /* Fix spacing for research items */
-  td[style*="padding:20px;width:25%"] {
-    padding: 15px !important;
-  }
-
-  td[style*="padding:20px;width:75%"] {
-    padding: 15px !important;
+    margin: 5px 10px;
   }
 }
 
@@ -157,15 +155,18 @@ table[style*="border:0px;border-spacing:0px;border-collapse:separate;margin-righ
     width: 90% !important;
   }
   
+  /* Set research video column width */
   td[style*="width:25%"] {
     width: 35% !important;
     padding-right: 20px !important;
   }
   
+  /* Set research text column width */
   td[style*="width:75%"] {
     width: 65% !important;
   }
   
+  /* Set video size for desktop */
   video {
     width: 100% !important;
     max-width: 350px !important;
