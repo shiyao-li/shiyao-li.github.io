@@ -9,6 +9,7 @@
 
   <!-- Bootstrap -->
   <link href="static/css/bootstrap-4.4.1.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -68,11 +69,11 @@
           Related Projects
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://haofeixu.github.io/unimatch/">
-            UniMatch - TPAMI 2023
+          <a class="navbar-item" href="https://imagine.enpc.fr/~guedona/MACARONS/">
+            MACARONS - CVPR 2023
           </a>
-          <a class="navbar-item" href="https://donydchen.github.io/mvsplat">
-            MVSplat - ECCV 2024 (Oral)
+          <a class="navbar-item" href="https://github.com/Anttwo/SCONE?tab=readme-ov-file">
+            SCONE - NIPS 2022 (spotlight)
           </a>
         </div>
       </div>
@@ -96,19 +97,15 @@
           
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://haofeixu.github.io/">Haofei Xu</a><sup>1,2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://shiyao-li.github.io/">Shiyao Li</a><sup>1,2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              <a href="https://pengsongyou.github.io/">Songyou Peng</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://anttwo.github.io/">Antoine Guédon</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              <a href="https://fangjinhuawang.github.io/">Fangjinhua Wang</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://clementinboittiaux.github.io/">Clémentin Boittiaux</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              <a href="https://hermannblum.net/">Hermann Blum</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://cshizhe.github.io/">Shizhe Chen</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=U9-D8DYAAAAJ">Daniel Barath</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;<br>
-            <span class="author-block">
-            <a href="http://www.cvlibs.net/">Andreas Geiger</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="author-block">
-              <a href="https://people.inf.ethz.ch/marc.pollefeys/">Marc Pollefeys</a><sup>1,3</sup>
+              <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;<br>
             </span>
           </div>
 
@@ -119,16 +116,15 @@
           </div> -->
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>ETH Zurich</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="author-block"><sup>2</sup>University of Tübingen, Tübingen AI Center</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="author-block"><sup>3</sup>Microsoft</span>
+            <span class="author-block"><sup>1</sup>École Nationale des Ponts et Chaussées</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Inria</span>&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2410.13862"
+                <a href="https://openreview.net/forum?id=7WaRh4gCXp"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -138,12 +134,22 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/cvg/depthsplat"
+                <a href="https://github.com/xxxxxx--"
                    class="external-link button is-normal is-rounded is-dark disabled">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code</span>
+                  <span>Code (Coming soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/xxxxxx--"
+                   class="external-link button is-normal is-rounded is-dark disabled">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>Dataset (Coming soon)</span>
                   </a>
               </span>
             </div>
@@ -157,11 +163,22 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="./assets/teaser.png" class="center">
+      <div class="columns">
+        <div class="column">
+          <img src="./assets/poster_bad_2.png" class="center">
+          <p class="has-text-centered" style="margin-top: 15px; font-size: 19px;">
+            Left: Previous state of the art.
+          </p>
+        </div>
+        <div class="column">
+          <img src="./assets/poster_ours_2.png" class="center">
+          <p class="has-text-centered" style="margin-top: 15px; font-size: 19px;">
+            Right: Our method.
+          </p>
+        </div>
+      </div>
       <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-        <b>DepthSplat enables cross-task interactions between Gaussian splatting and depth estimation.</b> <br>
-        <p style="font-size: 19px;">Left: Better depth leads to improved novel view synthesis with Gaussian splatting.</p>
-        <p style="font-size: 19px;">Right: Unsupervised depth pre-training with Gaussian splatting leads to reduced depth prediction error.</p>
+        <b>NextBestPath enables the agent to perform efficient active mapping in unknown and complex indoor environments.</b>
       </h2>
     </div>
   </div>
@@ -171,53 +188,46 @@
 <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
-      <div id="results-carousel" class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item item-flower">
-          <video poster="" id="flower" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_2a695d52faf1949e.mp4"
-                    type="video/mp4">
+      <div class="columns">
+        <div class="column">
+          <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
+            <source src="assets/video/exploration_nbv.mp4" type="video/mp4">
           </video>
         </div>
-
-        <div class="item item-ancient">
-          <video poster="" id="ancient" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_f80f0077f529c4d7.mp4"
-                    type="video/mp4">
+        <div class="column">
+          <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
+            <source src="assets/video/exploration_ours.mp4" type="video/mp4">
           </video>
         </div>
-        <div class="item item-horns">
-          <video poster="" id="horns" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_0e2653d00e3fc05a.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-leaves">
-          <video poster="" id="leaves" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_6ca4076fadf3200e.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-leaves">
-          <video poster="" id="leaves" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_c8de87bb03e6ba4c.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-leaves">
-          <video poster="" id="leaves" autoplay controls muted loop height="100%">
-            <source src="assets/video/re10k_c2e81ece6a48abb0.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-          
       </div>
     </div>
   </div>
-   	<div align="center">
-      Feed-forward novel view synthesis (512x960) on unseen scenes from 6 input views.
-	</div>
+  <div align="center">
+    <p>Previous works mainly focus on using reinforcement learning (RL) or uncertainty prediction methods.</p>
+    <p>We improve the NBV-based SOTA method MACARONS with RL (left), but it still underperforms our approach by a large margin (right).
+  </div>
   <br>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const video1 = document.getElementById('video1');
+  const video2 = document.getElementById('video2');
+
+  // Synchronize video playback
+  video1.addEventListener('play', function() {
+    video2.play();
+  });
+
+  video1.addEventListener('pause', function() {
+    video2.pause();
+  });
+
+  video1.addEventListener('seeked', function() {
+    video2.currentTime = video1.currentTime;
+  });
+});
+</script>
 
 
 
@@ -229,10 +239,11 @@
         <h2 class="title is-3" style="margin-top: -30px">Summary</h2>
         <div class="content has-text-justified">
           <ul>
-            <li style="font-size:18px">We present DepthSplat to connect Gaussian splatting and single/multi-view depth estimation and study their interactions.</li>
-            <li style="font-size:18px">We contribute a robust multi-view depth model by leveraging pre-trained monocular depth features, leading to high-quality 3D Gaussian reconstructions.</li>
-            <li style="font-size:18px">We show that Gaussian splatting can serve as an unsupervised pre-training objective for learning powerful depth models from large-scale unlabelled datasets.</li>
-            <li style="font-size:18px">State-of-the-art performance on ScanNet, RealEstate10K and DL3DV datasets for both depth estimation and novel view synthesis tasks.</li>
+            <li style="font-size:18px">We introduce AiMDoom, the first benchmark to systematically evaluate active mapping in indoor
+              scenes of different levels of difficulties.</li>
+            <li style="font-size:18px">We propose a novel next-best-path approach that jointly predicts long-term goals with optimal
+              reconstruction coverage gains, and obstacle maps for trajectory planning.</li>
+            <li style="font-size:18px">Our approach achieved state-of-the-art results on both the AiMDoom and MP3D datasets.</li>
           </ul>
 
         </div>
@@ -242,21 +253,17 @@
   </div>
 </section>
 
-
-
 <section class="section">
   <div class="container is-max-desktop">
 
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">Architecture</h2>
+        <h2 class="title is-3" style="margin-top: -20px">AiMDoom Dataset</h2>
 
-        <img src="./assets/pipeline.png" class="center">
+        <img src="./assets/dataset.png" class="center">
 
         <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-          Multi-view feature matching + monocular depth feature &rArr; high-quality depth and rendering <br>
-          Unsupervised depth pre-training with Gaussian splatting &rArr; improved depth accuracy
-        </h2>
+          Random maps from the AiMDoom dataset, categorized into four levels by scene size and complexity, with 100 scenes per level, arranged from top to bottom: Simple, Normal, Hard, and Insane.        </h2>
 
       </div>
     </div>
@@ -264,124 +271,18 @@
   </div>
 </section>
 
-
 <section class="section">
   <div class="container is-max-desktop">
 
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">Unsupervised Pre-Training with Gaussian Splatting</h2>
+        <h2 class="title is-3" style="margin-top: -20px">Architecture of NextBestPath</h2>
 
-        <img src="./assets/gs_pretrain.png" class="center">
-
-        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-          Unsupervised pre-training consistently helps for both Abs Rel (left) and Delta1 (right) metrics. <br>
-          The improvements are especially significant on the challenging datasets like TartanAir and KITTI.
-        </h2>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-<section class="hero is-small">
-  <h2 class="title is-3" style="text-align: center; margin-bottom: -10px">Scale-Consistent Depth Prediction</h2>
-  <div class="hero-body">
-    
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel" data-slides-to-show="1", style="text-align: center; width: 80%; margin: 10px auto;">
-
-        <div class="item item-steve">
-          <img src="./assets/depth/3bb894d1933f3081134ad2d40e54de5f0636bd8b502b0a8561873bb63b0dce85.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/0a485338bbdaf19ba9090b874bb36ef0599a9c9a475a382c22903cf5981c6ea6.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/1264931635e127fb905c8953cbc2deadd0c763e633af7fbd9405a61ca849710c.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/6d81c5ab0d480fd43d78b75ff372a8113ad38e2c03f1d69627c009883054d4c2.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/b2076bc7231bac445b1a3d0015a410675a3222f25cc219e8178a62a0dd4ac63d.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/c37109a55effe0000f8e40652ca935376e75bcb2a0b56de8eabd20a26e2a0f68.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/e78f8cebd2bd93d960bfaeac18fac0bb2524f15c44288903cd20b73e599e8a81.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/ed16328235c610f15405ff08711eaf15d88a0503884f3a9ccb5a0ee69cb4acb5.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/0d5a4dcdf8ec9d36.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/2c805f56d92a2e22.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/e9f26893411838ee.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/397b050e345d73fd.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/7cf899a59a83fbea.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/97cf7d672434d294.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/acd498c538ea838c.png" alt="Depth" width="100%">
-        </div>
-
-        <div class="item item-steve">
-          <img src="./assets/depth/d22162b6e3164792.png" alt="Depth" width="100%">
-        </div>
-
-      </div>
-        
-      <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-        Our model predicts scale-consistent depths (aligned with the scale of the camera pose's translation).
-      </h2>
-    </div>
-    
-  </div>
-</section>
-
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">Different Number of Input Views</h2>
-
-        <img src="./assets/different_views.png" class="center">
+        <img src="./assets/pipeline_iclr_final.png" class="center">
 
         <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-          Our DepthSplat consistently outperforms MVSplat with different number of input views.
+          Overview of the next-best-path (NBP) framework. The model predicts a value map of coverage gain and an obstacle map, which are used for decision making to obtain a next-best path.
         </h2>
-
       </div>
     </div>
 
@@ -392,107 +293,34 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">Comparisons</h2>
-
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 autoplay
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 loop
-                 width="100%"
-                 style="margin-bottom: -20px;"
-                 >
-            <source src="./assets/video/dl3dv_compare1.mp4"
-                    type="video/mp4">
-          </video>
+        <h2 class="title is-3" style="margin-top: -20px">More comparisons (more visualizations are coming soon)</h2>
+ 
+        <div class="columns">
+          <div class="column">
+            <img src="./assets/poster_bad_1.png" width="100%">
+            <p class="subtitle is-6 has-text-centered" style="margin-top: 10px;">
+              Previous state of the art
+            </p>
+          </div>
+          <div class="column">
+            <img src="./assets/poster_ours_1.png" width="100%">
+            <p class="subtitle is-6 has-text-centered" style="margin-top: 10px;">
+              Our method
+            </p>
+          </div>
         </div>
-
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 autoplay
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 loop
-                 width="100%">
-            <source src="./assets/video/dl3dv_compare2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-
-        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-          Feed-forward view synthesis results from 6 input views on DL3DV dataset.
-        </h2>
-
-
       </div>
     </div>
-
   </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">Large-Scale Scene Synthesis</h2>
-
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 autoplay
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 loop
-                 width="90%"
-                 style="margin-bottom: -20px;"
-                 >
-            <source src="./assets/video/dl3dv_sample1.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 autoplay
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 loop
-                 width="90%"
-                 style="margin-bottom: -20px;"
-                 >
-            <source src="./assets/video/dl3dv_sample2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-
-        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-          Feed-forward large-scale scene synthesis from 12 input views (512x960) on DL3DV dataset. <br>
-          (MVSplat runs OOM on this setting)
-        </h2>
-
-
-      </div>
-    </div>
-
-  </div>
-</section>
+ </section>
 
 
 
-<section class="section" id="BibTeX">
+
+
+<!-- <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title" style="margin-top: -60px">BibTeX</h2>
     <pre><code>@article{xu2024depthsplat,
@@ -502,7 +330,7 @@
       year    = {2024}
     }</code></pre>
   </div>
-</section>
+</section> -->
 
 
 <!-- footnote -->
