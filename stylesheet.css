@@ -64,3 +64,23 @@ video {
   margin: 0 auto;
   overflow-x: auto; /* 允许在必要时横向滚动 */
 }
+/* Research section styles */
+papertitle {
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700
+}
+
+.research-content {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.research-content a {
+  font-size: 14px;
+}
+
+.research-content p {
+  font-size: 14px;
+  margin: 0.5em 0;
+}
