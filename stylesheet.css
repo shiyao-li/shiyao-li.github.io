@@ -3,19 +3,7 @@ body {
   margin: 0;
   padding: 0;
   min-width: 800px;
-}
-
-table {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Font faces */
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
+  -webkit-text-size-adjust: none; /* 防止iOS自动调整文字大小 */
 }
 
 /* Typography */
@@ -32,13 +20,12 @@ strong {
 heading {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 22px;
-  display: block;
 }
 
 papertitle {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 700
 }
 
 name {
@@ -57,30 +44,23 @@ a:focus, a:hover {
   text-decoration: none;
 }
 
-/* Videos */
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Video */
 video {
-  display: block;
   width: 180px;
   height: 120px;
   object-fit: cover;
+  display: block;
 }
 
-/* Mobile optimization */
-@media only screen and (max-width: 800px) {
-  body {
-    -webkit-text-size-adjust: none;
-  }
-  
-  table {
-    width: 800px !important;
-  }
-  
-  td {
-    width: auto !important;
-  }
-  
-  img, video {
-    max-width: 100%;
-    height: auto;
-  }
+/* Main container */
+.main-container {
+  width: 800px;
+  margin: 0 auto;
+  overflow-x: auto; /* 允许在必要时横向滚动 */
 }
