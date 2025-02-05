@@ -111,9 +111,9 @@
 
           <!-- <br> -->
 
-          <!-- <div class="column is-full_width">
-            <h2 class="title is-4">xxx 2025</h2>
-          </div> -->
+          <div class="column is-full_width">
+            <h2 class="title is-3.5"><strong>ICLR 2025</strong></h2>
+          </div>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>École Nationale des Ponts et Chaussées</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -185,58 +185,13 @@
 </section>
 
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div class="columns">
-        <div class="column">
-          <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
-            <source src="assets/video/exploration_nbv.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="column">
-          <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
-            <source src="assets/video/exploration_ours.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div align="center">
-    <p>Previous works mainly focus on using reinforcement learning (RL) or uncertainty prediction methods.</p>
-    <p>We improve the NBV-based SOTA method MACARONS with RL (left), but it still underperforms our approach by a large margin (right).
-  </div>
-  <br>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const video1 = document.getElementById('video1');
-  const video2 = document.getElementById('video2');
-
-  // Synchronize video playback
-  video1.addEventListener('play', function() {
-    video2.play();
-  });
-
-  video1.addEventListener('pause', function() {
-    video2.pause();
-  });
-
-  video1.addEventListener('seeked', function() {
-    video2.currentTime = video1.currentTime;
-  });
-});
-</script>
-
-
 
 <section class="section">
   <div class="container is-max-desktop">
     <!-- TL;DR -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3" style="margin-top: -30px">Summary</h2>
+        <h2 class="title is-3" style="margin-top: -30px">Overview</h2>
         <div class="content has-text-justified">
           <ul>
             <li style="font-size:18px">We introduce AiMDoom, the first benchmark to systematically evaluate active mapping in indoor
@@ -316,7 +271,49 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
  </section>
 
+ <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
+            <source src="assets/video/exploration_nbv.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
+            <source src="assets/video/exploration_ours.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div align="center">
+    <p>Previous works mainly focus on using reinforcement learning (RL) or uncertainty prediction methods.</p>
+    <p>We improve the NBV-based SOTA method MACARONS with RL (left), but it still underperforms our approach by a large margin (right).
+  </div>
+  <br>
+</section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const video1 = document.getElementById('video1');
+  const video2 = document.getElementById('video2');
+
+  // Synchronize video playback
+  video1.addEventListener('play', function() {
+    video2.play();
+  });
+
+  video1.addEventListener('pause', function() {
+    video2.pause();
+  });
+
+  video1.addEventListener('seeked', function() {
+    video2.currentTime = video1.currentTime;
+  });
+});
+</script>
 
 
 
