@@ -190,7 +190,7 @@
   <div class="container is-max-desktop">
     <!-- TL;DR -->
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+      <div class="column is-full-width">
         <h2 class="title is-3" style="margin-top: -30px">Overview</h2>
         <div class="content has-text-justified">
           <ul>
@@ -217,9 +217,14 @@
 
         <img src="./assets/dataset.png" class="center">
 
-        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px; font-size: 17px">
           Random maps from the AiMDoom dataset, categorized into four levels by scene size and complexity, with 100 scenes per level, arranged from top to bottom: Simple, Normal, Hard, and Insane.        </h2>
-
+        <img src="./assets/doom_inside.png" class="center">
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px; font-size: 17px">
+          Indoor captures from AiMDoom.</h2>
+        <img src="./assets/comparison_dataset.png" class="center">
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px; font-size: 17px">
+          Comparison between AiMDoom and prior indoor 3D datasets. </h2>
       </div>
     </div>
 
@@ -240,10 +245,60 @@
         </h2>
       </div>
     </div>
-
+ 
   </div>
 </section>
 
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px">Training Procedure</h2>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+          <div>
+            <img src="./assets/training_procedure.png" style="height: 300px; width: auto; object-fit: contain;">
+          </div>
+          <div>
+            <img src="./assets/training_procedure_1.png" style="height: 300px; width: auto; object-fit: contain;">
+          </div>
+        </div>
+
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px; font-size: 17px">
+          Training procedure: We first gather training data from all training scenes using the current model, and then update the model with the new data. This process is repeated
+          iteratively until the model achieves convergence.
+        </h2>
+      </div>
+    </div>
+ 
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px; margin-bottom: 10px;">Evaluation results</h2>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: -70px; margin-bottom: -70px;">
+          <div>
+            <img src="./assets/results_aimdoom.png" style="height: 300px; width: auto; object-fit: contain;">
+          </div>
+          <div>
+            <img src="./assets/results_mp3d.png" style="height: 300px; width: auto; object-fit: contain;">
+          </div>
+        </div>
+
+        <h2 class="subtitle has-text-centered" style="margin-top: 10px; font-size: 17px;">
+          Our NBP model can efficiently reconstruct unseen environments guided by predicted long-term goals, achieving state-of-the-art performance on both the MP3D and AiMDoom datasets
+        </h2>
+      </div>
+    </div>
+ 
+  </div>
+</section>
 
 
 <section class="section">
