@@ -292,7 +292,7 @@
         </div>
 
         <h2 class="subtitle has-text-centered" style="margin-top: 10px; font-size: 17px;">
-          Our NBP model can efficiently reconstruct unseen environments guided by predicted long-term goals, achieving state-of-the-art performance on both the MP3D and AiMDoom datasets
+          Our NBP model can efficiently reconstruct unseen environments guided by predicted long-term goals, achieving state-of-the-art performance on both the AiMDoom (left) and MP3D (right) datasets
         </h2>
       </div>
     </div>
@@ -305,7 +305,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3" style="margin-top: -20px">More comparisons (more visualizations are coming soon)</h2>
+        <h2 class="title is-3" style="margin-top: -20px">More Comparisons</h2>
  
         <div class="columns">
           <div class="column">
@@ -329,47 +329,178 @@
  <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
+      <!-- First row of videos -->
       <div class="columns">
         <div class="column">
-          <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
-            <source src="assets/video/exploration_nbv.mp4" type="video/mp4">
-          </video>
+          <div class="video-container">
+            <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/video/appalling_river_2_macarons.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2">Previous state of the art</p>
+          </div>
         </div>
         <div class="column">
-          <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
-            <source src="assets/video/exploration_ours.mp4" type="video/mp4">
-          </video>
+          <div class="video-container">
+            <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/video/appalling_river_2_ours.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2">Our method</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Second row of videos -->
+      <div class="columns mt-4">
+        <div class="column">
+          <div class="video-container">
+            <video poster="" id="video3" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/video/exploration_nbv.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2">Previous state of the art</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="video-container">
+            <video poster="" id="video4" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/video/exploration_ours.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2">Our method</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div align="center">
+  
+  <div align="center" class="mt-4">
     <p>Previous works mainly focus on using reinforcement learning (RL) or uncertainty prediction methods.</p>
-    <p>We improve the NBV-based SOTA method MACARONS with RL (left), but it still underperforms our approach by a large margin (right).
+    <p>We improve the NBV-based SOTA method MACARONS with RL (the video in the second row), but it still underperforms our approach by a large margin.
   </div>
   <br>
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const video1 = document.getElementById('video1');
-  const video2 = document.getElementById('video2');
-
-  // Synchronize video playback
-  video1.addEventListener('play', function() {
-    video2.play();
+  document.addEventListener('DOMContentLoaded', function() {
+    // Only run the script after the page is fully loaded
+    setTimeout(function() {
+      const video1 = document.getElementById('video1');
+      const video2 = document.getElementById('video2');
+      const video3 = document.getElementById('video3');
+      const video4 = document.getElementById('video4');
+      
+      if (!video1 || !video2 || !video3 || !video4) {
+        console.error('One or more videos not found');
+        return;
+      }
+      
+      // Simpler approach with fewer potential synchronization issues
+      
+      // First pair synchronization (video1 and video2)
+      function syncFirstPair() {
+        const mainVideo = video1;
+        const syncedVideo = video2;
+        
+        // Handle play/pause state
+        mainVideo.onplay = function() {
+          if (syncedVideo.paused) {
+            syncedVideo.play().catch(e => console.log("Play error:", e));
+          }
+        };
+        
+        mainVideo.onpause = function() {
+          if (!syncedVideo.paused) {
+            syncedVideo.pause();
+          }
+        };
+        
+        // Handle time synchronization
+        mainVideo.ontimeupdate = function() {
+          // Only sync if time difference is significant (>0.2s)
+          if (Math.abs(mainVideo.currentTime - syncedVideo.currentTime) > 0.2) {
+            syncedVideo.currentTime = mainVideo.currentTime;
+          }
+        };
+        
+        // Handle seeking
+        mainVideo.onseeked = function() {
+          syncedVideo.currentTime = mainVideo.currentTime;
+        };
+        
+        // Reverse synchronization
+        syncedVideo.onplay = function() {
+          if (mainVideo.paused) {
+            mainVideo.play().catch(e => console.log("Play error:", e));
+          }
+        };
+        
+        syncedVideo.onpause = function() {
+          if (!mainVideo.paused) {
+            mainVideo.pause();
+          }
+        };
+        
+        syncedVideo.onseeked = function() {
+          mainVideo.currentTime = syncedVideo.currentTime;
+        };
+      }
+      
+      // Second pair synchronization (video3 and video4)
+      function syncSecondPair() {
+        const mainVideo = video3;
+        const syncedVideo = video4;
+        
+        // Handle play/pause state
+        mainVideo.onplay = function() {
+          if (syncedVideo.paused) {
+            syncedVideo.play().catch(e => console.log("Play error:", e));
+          }
+        };
+        
+        mainVideo.onpause = function() {
+          if (!syncedVideo.paused) {
+            syncedVideo.pause();
+          }
+        };
+        
+        // Handle time synchronization
+        mainVideo.ontimeupdate = function() {
+          // Only sync if time difference is significant (>0.2s)
+          if (Math.abs(mainVideo.currentTime - syncedVideo.currentTime) > 0.2) {
+            syncedVideo.currentTime = mainVideo.currentTime;
+          }
+        };
+        
+        // Handle seeking
+        mainVideo.onseeked = function() {
+          syncedVideo.currentTime = mainVideo.currentTime;
+        };
+        
+        // Reverse synchronization
+        syncedVideo.onplay = function() {
+          if (mainVideo.paused) {
+            mainVideo.play().catch(e => console.log("Play error:", e));
+          }
+        };
+        
+        syncedVideo.onpause = function() {
+          if (!mainVideo.paused) {
+            mainVideo.pause();
+          }
+        };
+        
+        syncedVideo.onseeked = function() {
+          mainVideo.currentTime = syncedVideo.currentTime;
+        };
+      }
+      
+      // Initialize synchronization
+      syncFirstPair();
+      syncSecondPair();
+      
+      console.log('Simplified video synchronization initialized');
+    }, 1000); // Increased wait time to 1000ms for better loading
   });
-
-  video1.addEventListener('pause', function() {
-    video2.pause();
-  });
-
-  video1.addEventListener('seeked', function() {
-    video2.currentTime = video1.currentTime;
-  });
-});
-</script>
-
+  </script>
+  
 
 
 <section class="section" id="BibTeX">
