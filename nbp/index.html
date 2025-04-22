@@ -380,127 +380,136 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Only run the script after the page is fully loaded
+    // Wait for the page to be fully loaded
     setTimeout(function() {
+      // Get video elements
       const video1 = document.getElementById('video1');
       const video2 = document.getElementById('video2');
       const video3 = document.getElementById('video3');
       const video4 = document.getElementById('video4');
       
+      // Get control buttons for first pair
+      const playBtn1 = document.getElementById('play-btn1');
+      const pauseBtn1 = document.getElementById('pause-btn1');
+      const restartBtn1 = document.getElementById('restart-btn1');
+      
+      // Get control buttons for second pair
+      const playBtn3 = document.getElementById('play-btn3');
+      const pauseBtn3 = document.getElementById('pause-btn3');
+      const restartBtn3 = document.getElementById('restart-btn3');
+      
+      // Check if all elements exist
       if (!video1 || !video2 || !video3 || !video4) {
         console.error('One or more videos not found');
         return;
       }
       
-      // Simpler approach with fewer potential synchronization issues
-      
-      // First pair synchronization (video1 and video2)
-      function syncFirstPair() {
-        const mainVideo = video1;
-        const syncedVideo = video2;
+      // Function to play first pair of videos
+      function playFirstPair() {
+        // Reset videos if they've ended
+        if (video1.ended) video1.currentTime = 0;
+        if (video2.ended) video2.currentTime = 0;
         
-        // Handle play/pause state
-        mainVideo.onplay = function() {
-          if (syncedVideo.paused) {
-            syncedVideo.play().catch(e => console.log("Play error:", e));
-          }
-        };
+        // Make sure they're in sync before playing
+        video2.currentTime = video1.currentTime;
         
-        mainVideo.onpause = function() {
-          if (!syncedVideo.paused) {
-            syncedVideo.pause();
-          }
-        };
+        // Play both videos with error handling
+        const promise1 = video1.play();
+        if (promise1 !== undefined) {
+          promise1.catch(error => {
+            console.log("Error playing video1:", error);
+          });
+        }
         
-        // Handle time synchronization
-        mainVideo.ontimeupdate = function() {
-          // Only sync if time difference is significant (>0.2s)
-          if (Math.abs(mainVideo.currentTime - syncedVideo.currentTime) > 0.2) {
-            syncedVideo.currentTime = mainVideo.currentTime;
-          }
-        };
-        
-        // Handle seeking
-        mainVideo.onseeked = function() {
-          syncedVideo.currentTime = mainVideo.currentTime;
-        };
-        
-        // Reverse synchronization
-        syncedVideo.onplay = function() {
-          if (mainVideo.paused) {
-            mainVideo.play().catch(e => console.log("Play error:", e));
-          }
-        };
-        
-        syncedVideo.onpause = function() {
-          if (!mainVideo.paused) {
-            mainVideo.pause();
-          }
-        };
-        
-        syncedVideo.onseeked = function() {
-          mainVideo.currentTime = syncedVideo.currentTime;
-        };
+        const promise2 = video2.play();
+        if (promise2 !== undefined) {
+          promise2.catch(error => {
+            console.log("Error playing video2:", error);
+          });
+        }
       }
       
-      // Second pair synchronization (video3 and video4)
-      function syncSecondPair() {
-        const mainVideo = video3;
-        const syncedVideo = video4;
-        
-        // Handle play/pause state
-        mainVideo.onplay = function() {
-          if (syncedVideo.paused) {
-            syncedVideo.play().catch(e => console.log("Play error:", e));
-          }
-        };
-        
-        mainVideo.onpause = function() {
-          if (!syncedVideo.paused) {
-            syncedVideo.pause();
-          }
-        };
-        
-        // Handle time synchronization
-        mainVideo.ontimeupdate = function() {
-          // Only sync if time difference is significant (>0.2s)
-          if (Math.abs(mainVideo.currentTime - syncedVideo.currentTime) > 0.2) {
-            syncedVideo.currentTime = mainVideo.currentTime;
-          }
-        };
-        
-        // Handle seeking
-        mainVideo.onseeked = function() {
-          syncedVideo.currentTime = mainVideo.currentTime;
-        };
-        
-        // Reverse synchronization
-        syncedVideo.onplay = function() {
-          if (mainVideo.paused) {
-            mainVideo.play().catch(e => console.log("Play error:", e));
-          }
-        };
-        
-        syncedVideo.onpause = function() {
-          if (!mainVideo.paused) {
-            mainVideo.pause();
-          }
-        };
-        
-        syncedVideo.onseeked = function() {
-          mainVideo.currentTime = syncedVideo.currentTime;
-        };
+      // Function to pause first pair of videos
+      function pauseFirstPair() {
+        video1.pause();
+        video2.pause();
       }
       
-      // Initialize synchronization
-      syncFirstPair();
-      syncSecondPair();
+      // Function to restart first pair of videos
+      function restartFirstPair() {
+        video1.currentTime = 0;
+        video2.currentTime = 0;
+        playFirstPair();
+      }
       
-      console.log('Simplified video synchronization initialized');
-    }, 1000); // Increased wait time to 1000ms for better loading
+      // Function to play second pair of videos
+      function playSecondPair() {
+        // Reset videos if they've ended
+        if (video3.ended) video3.currentTime = 0;
+        if (video4.ended) video4.currentTime = 0;
+        
+        // Make sure they're in sync before playing
+        video4.currentTime = video3.currentTime;
+        
+        // Play both videos with error handling
+        const promise3 = video3.play();
+        if (promise3 !== undefined) {
+          promise3.catch(error => {
+            console.log("Error playing video3:", error);
+          });
+        }
+        
+        const promise4 = video4.play();
+        if (promise4 !== undefined) {
+          promise4.catch(error => {
+            console.log("Error playing video4:", error);
+          });
+        }
+      }
+      
+      // Function to pause second pair of videos
+      function pauseSecondPair() {
+        video3.pause();
+        video4.pause();
+      }
+      
+      // Function to restart second pair of videos
+      function restartSecondPair() {
+        video3.currentTime = 0;
+        video4.currentTime = 0;
+        playSecondPair();
+      }
+      
+      // Set up event listeners for first pair buttons
+      playBtn1.addEventListener('click', playFirstPair);
+      pauseBtn1.addEventListener('click', pauseFirstPair);
+      restartBtn1.addEventListener('click', restartFirstPair);
+      
+      // Set up event listeners for second pair buttons
+      playBtn3.addEventListener('click', playSecondPair);
+      pauseBtn3.addEventListener('click', pauseSecondPair);
+      restartBtn3.addEventListener('click', restartSecondPair);
+      
+      // Keep videos in sync during playback (first pair)
+      video1.addEventListener('timeupdate', function() {
+        // Sync only if the time difference is significant
+        if (Math.abs(video1.currentTime - video2.currentTime) > 0.3) {
+          video2.currentTime = video1.currentTime;
+        }
+      });
+      
+      // Keep videos in sync during playback (second pair)
+      video3.addEventListener('timeupdate', function() {
+        // Sync only if the time difference is significant
+        if (Math.abs(video3.currentTime - video4.currentTime) > 0.3) {
+          video4.currentTime = video3.currentTime;
+        }
+      });
+      
+      console.log('Custom video controls initialized');
+    }, 1000);
   });
   </script>
-  
 
 
 <section class="section" id="BibTeX">
