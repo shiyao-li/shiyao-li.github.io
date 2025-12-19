@@ -1,175 +1,351 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="JFPbJpoKUj9A-ZL7uisUzXIrTUmngXHBoJX66jA3HUk" />
-    <!-- 关键: 固定viewport宽度为800px -->
-    <meta name=viewport content="width=800">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Shiyao Li</title>
-    <!-- 内联关键样式 -->
-    <style>
-      body {
-        min-width: 800px;
-        margin: 0;
-        padding: 0;
-      }
-      .main-container {
-        width: 800px;
-        margin: 0 auto;
-        padding-top: 40px;
-      }
-      video {
-        width: 180px;
-        height: 120px;
-        display: block;
-      }
-    </style>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <link rel="icon" type="image/png" href="assets/fly.png">
-  </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <body>
-    <div class="main-container">
-      <table width="800" border="0" align="center" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <!-- Bio Section -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="20">
-              <tr>
-                <td width="80%" valign="middle">
-                  <p align="center">
-                    <name>Shiyao Li</name>
-                  </p>
-                  <p>
-                    I am currently a PhD student at <a href="https://imagine-lab.enpc.fr/">IMAGINE (Institut Polytechnique de Paris)</a> and <a href="https://www.di.ens.fr/willow/">Willow (Inria)</a>, supervised by <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a> and <a href="https://cshizhe.github.io/">Shizhe Chen</a>, funded by the ERC Advanced Grant <i>explorer</i>.
-                  </p>
-                  <p>
-                    My research interests lie primarily in 3D computer vision and embodied ai. Before my PhD, I graduated with highest honors (mention très bien) from <a href="https://www.master-mva.com/"> Mathematics, Vision, and Learning (MVA)</a> master program at <a href="https://ens-paris-saclay.fr/">ENS Paris Saclay</a>.
-                  </p>
-                  <p>
-                    Feel free to drop me an email if you’d like to discuss a potential collaboration.
-                    <p>
-                  <p align="center">
-                    <a href="mailto:shiyao.li@enpc.fr">Email</a> &nbsp|&nbsp
-                    <a href="https://scholar.google.com/">Scholar</a> &nbsp|&nbsp
-                    <a href="https://x.com/LI_Shiyao16">Twitter</a> &nbsp|&nbsp
-                    <a href="https://github.com/shiyao-li">Github</a>&nbsp|&nbsp
-                    <a href="https://www.linkedin.com/in/shiyao-li-249549209/">Linkedln</a>
-                  </p>
-                </td>
-                <td width="30%">
-                  <img src="assets/shiyao.jpg" width="210" alt="photo">
-                </td>
-              </tr>
-            </table>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background: #ffffff;
+            font-size: 16px;
+        }
 
-            <!-- Research Section -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="20">
-              <tr>
-                <td width="100%" valign="middle">
-                  <heading>Research</heading>
-                </td>
-              </tr>
-            </table>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 30px 80px;
+        }
 
-            <!-- Research Content -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="20">
-              <tr style="vertical-align:top">
-                <td width="30%" style="vertical-align:top; padding-right: 0;">
-                  <div style="width:100%; max-width:220px; margin:0 auto;">
-                    <video style="width:100%; height:auto; display:block;" muted autoplay loop playsinline>
-                      <source src="assets/exploration_nbp.mp4" type="video/mp4">
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .profile-photo {
+            flex-shrink: 0;
+        }
+
+        .profile-photo img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .header-content h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #24292e;
+        }
+
+        .header-content .title {
+            font-size: 16px;
+            color: #586069;
+            margin-bottom: 12px;
+        }
+
+        .contact {
+            font-size: 15px;
+            color: #586069;
+            margin-bottom: 16px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: #24292e;
+            text-decoration: none;
+            font-size: 15px;
+            border-bottom: 1px solid #24292e;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #8b7355;
+            border-bottom-color: #8b7355;
+        }
+
+        /* About Section */
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #24292e;
+        }
+
+        .section p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+            color: #24292e;
+        }
+
+        .section a {
+            color: #24292e;
+            text-decoration: none;
+            border-bottom: 1px solid #24292e;
+            transition: all 0.3s ease;
+        }
+
+        .section a:hover {
+            color: #8b7355;
+            border-bottom-color: #8b7355;
+        }
+
+        /* Publications */
+        .paper {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .paper:last-child {
+            border-bottom: none;
+        }
+
+        .paper-image {
+            flex-shrink: 0;
+            width: 200px;
+        }
+
+        .paper-image video,
+        .paper-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .paper-content {
+            flex: 1;
+        }
+
+        .paper-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .paper-title a {
+            color: #24292e;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .paper-title a:hover {
+            color: #8b7355;
+        }
+
+        .paper-authors {
+            font-size: 15px;
+            color: #586069;
+            margin-bottom: 6px;
+        }
+
+        .paper-authors strong {
+            font-weight: 600;
+            color: #24292e;
+        }
+
+        .paper-venue {
+            font-size: 15px;
+            font-style: italic;
+            color: #586069;
+            margin-bottom: 10px;
+        }
+
+        .paper-desc {
+            font-size: 15px;
+            color: #24292e;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .paper-links {
+            font-size: 14px;
+        }
+
+        .paper-links a {
+            color: #24292e;
+            text-decoration: none;
+            margin-right: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .paper-links a:hover {
+            color: #8b7355;
+        }
+
+        /* Simple Lists */
+        .list-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-section li {
+            font-size: 15px;
+            color: #24292e;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .list-section li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #586069;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px 60px;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-photo img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .paper {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .paper-image {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="profile-photo">
+                <img src="assets/shiyao.jpg" alt="Shiyao Li">
+            </div>
+            <div class="header-content">
+                <h1>Shiyao Li</h1>
+                <div class="title">PhD Student, IMAGINE & Willow</div>
+                <div class="contact">shiyao.li [at] enpc [dot] fr, shiyao.li [at] inria [dot] fr</div>
+                <div class="social-links">
+                    <a href="https://scholar.google.com/">Google Scholar</a>
+                    <a href="https://x.com/LI_Shiyao16">Twitter</a>
+                    <a href="https://github.com/shiyao-li">Github</a>
+                    <a href="https://www.linkedin.com/in/shiyao-li-249549209/">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="section">
+            <h2>About Me</h2>
+            <p>
+                I am currently a PhD student at <a href="https://imagine-lab.enpc.fr/">IMAGINE (Institut Polytechnique de Paris)</a> and <a href="https://www.di.ens.fr/willow/">Willow (Inria)</a>, supervised by <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a> and <a href="https://cshizhe.github.io/">Shizhe Chen</a>, funded by the ERC Advanced Grant <em>explorer</em>.
+            </p>
+            <p>
+                My research interests lie primarily in 3D computer vision and embodied AI. Before my PhD, I graduated with highest honors (mention très bien) from <a href="https://www.master-mva.com/">Mathematics, Vision, and Learning (MVA)</a> master program at <a href="https://ens-paris-saclay.fr/">ENS Paris Saclay</a>.
+            </p>
+            <p>
+                Feel free to drop me an email if you'd like to discuss a potential collaboration.
+            </p>
+        </div>
+
+        <!-- Publications Section -->
+        <div class="section">
+            <h2>Research</h2>
+            
+            <div class="paper">
+                <div class="paper-image">
+                    <video muted autoplay loop playsinline>
+                        <source src="assets/exploration_nbp.mp4" type="video/mp4">
                     </video>
-                  </div>
-                </td>
-                <td width="70%" style="vertical-align:top; padding-left: 20px;">
-                  <div style="line-height: 1.4;">
-                    <a href="https://openreview.net/forum?id=7WaRh4gCXp">
-                      <papertitle style="font-size: 15px;">NextBestPath: Efficient 3D Mapping of Unseen Environments</papertitle>
-                    </a>
-                    <span style="font-size: 14px; display: block; margin: 2px 0;">
-                      <strong style="font-size: 14px;">Shiyao Li</strong>,
-                      <a href="https://anttwo.github.io/" style="font-size: 14px;">Antoine Guédon</a>,
-                      <a href="https://clementinboittiaux.github.io/" style="font-size: 14px;">Clémentin Boittiaux</a>,
-                      <a href="https://cshizhe.github.io/" style="font-size: 14px;">Shizhe Chen</a>,
-                      <a href="https://vincentlepetit.github.io/" style="font-size: 14px;">Vincent Lepetit</a>
-                    </span>
-                    <span style="font-size: 14px; display: block; margin: 2px 0;">
-                      <em>International Conference on Learning Representations (ICLR)</em>, 2025
-                      <br>
-                    <a href="https://shiyao-li.github.io/nbp" style="font-size: 14px; margin-left: 0px;">Project page</a>
-                    </span>
-                    <p style="margin: 8px 0 0 0; font-size: 14px; line-height: 1.4;">
-                      A method for generating the next-best-path for efficient active mapping, along with a new benchmark tailored for complex indoor environments.
-                    </p>
-                  </div>
-                </td>
-              </tr>
-            </table>
+                </div>
+                <div class="paper-content">
+                    <div class="paper-title">
+                        <a href="https://openreview.net/forum?id=7WaRh4gCXp">
+                            NextBestPath: Efficient 3D Mapping of Unseen Environments
+                        </a>
+                    </div>
+                    <div class="paper-authors">
+                        <strong>Shiyao Li</strong>, 
+                        Antoine Guédon, 
+                        Clémentin Boittiaux, 
+                        Shizhe Chen, 
+                        Vincent Lepetit
+                    </div>
+                    <div class="paper-venue">
+                        International Conference on Learning Representations (ICLR), 2025
+                    </div>
+                    <div class="paper-desc">
+                        A method for generating the next-best-path for efficient active mapping, along with a new benchmark tailored for complex indoor environments.
+                    </div>
+                    <div class="paper-links">
+                        <a href="https://shiyao-li.github.io/nbp">[Project Page]</a>
+                        <a href="https://openreview.net/forum?id=7WaRh4gCXp">[Paper]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <!-- TA & Supervision Section -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="20">
-              <tr>
-                <td width="100%" valign="middle">
-                  <heading>TA & Mentoring</heading>
-                </td>
-              </tr>
-            </table>
+        <!-- Teaching Section -->
+        <div class="section list-section">
+            <h2>Teaching & Mentoring</h2>
+            <ul>
+                <li>Teaching Assistant, Machine Learning and Applications (MALAP), École Nationale des Ponts et Chaussées, Institut Polytechnique de Paris, 2024–2025</li>
+                <li>Master student: Dmitrii Kuligin</li>
+            </ul>
+        </div>
 
-            <!-- TA & Supervision Content -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="5">
-              <tr>
-                <td width="100%" valign="top">
-                  <div style="line-height: 1.5; font-size: 14px;">
-                    <ul style="margin-top: 0; padding-left: 20px;">
-                      <li>Teaching Assistant, Machine Learning and Applications (MALAP), École Nationale des Ponts et Chaussees, IP Paris, 2024–2025</li>
-                      <li>Master student: Dmitrii KULIGIN</li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            </table>
+        <!-- Service Section -->
+        <div class="section list-section">
+            <h2>Service</h2>
+            <ul>
+                <li>Reviewer: IROS, CVPR, 3DV</li>
+            </ul>
+        </div>
 
-
-            <!-- Services -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="20">
-              <tr>
-                <td width="100%" valign="middle">
-                  <heading>Community service</heading>
-                </td>
-              </tr>
-            </table>
-
-            <!-- TA & Supervision Content -->
-            <table width="800" align="center" border="0" cellspacing="0" cellpadding="5">
-              <tr>
-                <td width="100%" valign="top">
-                  <div style="line-height: 1.5; font-size: 14px;">
-                    <ul style="margin-top: 0; padding-left: 20px;">
-                      <li>Reviewer: IROS, CVPR, 3DV
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            </table>
+        <!-- Copyright -->
+        <div class="copyright">
+          <p>© 2025 Shiyao Li</p>
+        </div>
 
 
-            <!-- Footer -->
-            <table width="800" align="center" border="0" cellpadding="20">
-              <tr>
-                <td>
-                  <br>
-                  <p align="center">
-                    <font size="2">
-                      <a href="https://jonbarron.info/"><font size="2" color="lightgray">awesome website template</font></a>
-                    </font>
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
     </div>
-  </body>
+</body>
 </html>
