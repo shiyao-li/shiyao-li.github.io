@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MAGICIAN: Efficient Long-Term Planning with
+        Imagined Gaussians for Active Mapping">
+  <meta name="keywords" content="Active mapping, Trajectory planning, 3D reconstruction">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="static/css/bootstrap-4.4.1.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./assets/icon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <style>
+    .container.is-max-desktop {
+      max-width: 1100px !important;
+    }
+
+    #toc {
+      position: fixed;
+      top: 120px;
+      left: 16px;
+      width: 160px;
+      background: rgba(255,255,255,0.95);
+      border-left: 3px solid #E040FB;
+      padding: 12px 14px;
+      border-radius: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      z-index: 100;
+      font-size: 13px;
+    }
+    #toc p {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #333;
+    }
+    #toc a {
+      display: block;
+      color: #555;
+      text-decoration: none;
+      padding: 4px 0;
+      border-radius: 3px;
+      transition: color 0.2s;
+    }
+    #toc a:hover, #toc a.active {
+      color: #E040FB;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+
+<div id="toc">
+  <p>Contents</p>
+  <a href="#sec-overview">Overview</a>
+  <a href="#sec-architecture">Architecture</a>
+  <a href="#sec-ig">Imagined Gaussians</a>
+  <a href="#sec-planning">Planning</a>
+  <a href="#sec-results">Results</a>
+  <a href="#sec-video">Video Comparisons</a>
+  <a href="#BibTeX">BibTeX</a>
+</div>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const sections = ['sec-overview','sec-architecture','sec-ig','sec-planning','sec-results','sec-video','BibTeX'];
+    const links = document.querySelectorAll('#toc a');
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.getBoundingClientRect().top + window.scrollY - 100) {
+        current = id;
+      }
+    });
+    links.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://shiyao-li.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Related Projects
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://shiyao-li.github.io/nbp/">
+            ICLR - ICLR 2025
+          </a>
+          <a class="navbar-item" href="https://anttwo.github.io/MACARONS/">
+            MACARONS - CVPR 2023
+          </a>
+          <a class="navbar-item" href="https://github.com/Anttwo/SCONE?tab=readme-ov-file">
+            SCONE - NIPS 2022 (Spotlight)
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<title>MAGICIAN</title>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="depth">MAGICIAN</span></h1>
+          <h2 class="title is-2 publication-title" style="margin-bottom: 0"><strong>Efficient Long-Term Planning with Imagined Gaussians for Active Mapping</strong></h2>
+
+          <div class="column is-full_width">
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://shiyao-li.github.io/">Shiyao Li</a><sup>1,2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://anttwo.github.io/">Antoine Guédon</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://cshizhe.github.io/">Shizhe Chen</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            </span>
+          </div>
+
+          <!-- <br> -->
+
+          <div class="column is-full_width">
+            <h2 class="title is-3.5"><strong>CVPR 2026</strong></h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Institut Polytechnique de Paris</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Inria</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https:/xxx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://xxx"
+                   class="external-link button is-normal is-rounded is-dark disabled">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://xxx"
+                   class="external-link button is-normal is-rounded is-dark disabled">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>Macarons++ Dataset</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="columns mt-5">
+            <div class="column">
+              <video id="hero-video1" autoplay controls muted loop playsinline width="100%">
+                <source src="assets/video/ours_fushimi.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2">Fushimi Castle</p>
+            </div>
+            <div class="column">
+              <video id="hero-video2" autoplay controls muted loop playsinline width="100%">
+                <source src="assets/video/ours_neuschwanstein.mp4" type="video/mp4">
+              </video>
+              <p class="has-text-centered mt-2">Neuschwanstein Castle</p>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered" style="margin-top: 15px">
+            <b><span class="depth">MAGICIAN</span> enables long-term planning for active mapping through <span style="color: orange;">imagination</span>.</b>
+          </h2>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- TL;DR -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -30px" id="sec-overview">Overview</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li style="font-size:18px">We introduce the first framework <span class="depth">MAGICIAN</span>, to our knowledge, capable of generating long-horizon trajectories for active 3D mapping, which addresses inherent limitations of greedy, short-term viewpoint selection.</li>
+            <li style="font-size:18px">We propose <span style="color: orange;">Imagined Gaussians</span> derived from a neural occupancy field to enable efficient and reliable coverage gain prediction from new viewpoints in unknown scenes, supporting feasible long-term planning with tree search.</li>
+            <li style="font-size:18px"><span class="depth">MAGICIAN</span> attains state-of-the-art performance in both indoor and outdoor environments, showcasing robust adaptability to diverse action spaces.</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px" id="sec-architecture">Architecture of <span class="depth">MAGICIAN</span></h2>
+
+        <img src="./assets/pipeline.jpg" class="center" width="100%">
+
+        <h2 class="subtitle has-text-centered" style="margin-top: 15px">
+          <strong>Overview of the proposed <span class="depth">MAGICIAN</span> framework.</strong>
+          At time t, we first predict the occupancy field and update the <span style="color: orange;">Imagined Gaussians</span>.
+          We can then efficiently estimate the coverage gain and apply beam search to plan candidate trajectories, selecting the one with the highest expected gain.
+          The agent then executes the first actions of the best trajectory before repeating this process in the next planning loop.
+          In this figure, lighter colors in the <span style="color: orange;">Imagined Gaussians</span> indicate higher novelty, while darker colors correspond to previously observed areas.
+          The first trajectory darkens the novelty field the most, representing the optimal path at time t.
+        </h2>
+      </div>
+    </div>
+ 
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px" id="sec-ig"><span style="color: orange;">Imagined Gaussians</span></h2>
+
+        <p style="font-size: 17px; margin-bottom: 16px;">
+          <strong>Long-term planning involves evaluating numerous candidate cameras, which motivates the introduction of <span style="color: orange;">Imagined Gaussians</span>.</strong>
+        </p>
+
+        <p style="font-size: 17px; margin-bottom: 16px;">
+          Predicting the coverage gain of a given camera is non-trivial, it requires evaluating three key properties for each point in its FoV:
+        </p>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 20px;">
+          <span style="font-size: 16px; font-weight: bold; color: black; white-space: nowrap;">Coverage Gain:</span>
+          <div style="font-size: 1.1em;">
+            \[
+              G(\mathbf{c}) =
+              \int_{\partial \mathcal{E} \cap \mathcal{V}(\mathbf{c})}
+              \sigma(\mathbf{x}) \cdot
+              o(\mathbf{x}, \mathbf{c}) \cdot
+              \gamma(\mathbf{x} \mid \mathbf{C}_t)
+              \, d\mathbf{x}
+            \]
+          </div>
+        </div>
+
+        <ul style="font-size: 17px; text-align: center; margin-bottom: 20px; list-style: disc; display: inline-block; text-align: left;">
+          <li style="margin-bottom: 6px;">\(\sigma\) <span style="color: gray;">(occupancy)</span>: Is there a solid surface?</li>
+          <li style="margin-bottom: 6px;">\(o\) <span style="color: gray;">(occlusion)</span>: Is it visible from this camera?</li>
+          <li style="margin-bottom: 6px;">\(\gamma\) <span style="color: gray;">(novelty)</span>: Is this an unobserved point?</li>
+        </ul>
+
+        <p style="font-size: 17px; margin-bottom: 8px;">
+          Indeed, we need to predict the occupancy and visibility of every point, then integrate over the entire field of view.<br>
+          Too complex, too slow...<br>
+          <strong><span style="color: #040404;">Wait, doesn't this formula look strangely familiar? Like volumetric rendering?</span></strong>
+        </p>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 20px;">
+          <span style="font-size: 16px; font-weight: bold; color: black; white-space: nowrap;">Volumetric Rendering:</span>
+          <div style="font-size: 1.1em;">
+            \[
+              I(\mathbf{p}) = \int_{0}^{+\infty} q(\mathbf{o} + s\mathbf{d}) \cdot T(s;\, \mathbf{o}, \mathbf{d}) \cdot f(\mathbf{o} + s\mathbf{d},\, \mathbf{d})\, ds
+            \]
+          </div>
+        </div>
+
+        <p style="font-size: 17px; margin-bottom: 12px;">
+          <strong><span style="color: #4FC3F7;">Aha! They share the same mathematical structure!</span></strong>
+        </p>
+        <img src="./assets/duality.png" class="center" width="80%" style="margin-bottom: 20px;">
+
+        <p style="font-size: 17px; margin-bottom: 20px;">
+          By training only a lightweight occupancy model, we can leverage the 3DGS renderer for fast coverage gain computation by predicting an occupancy field and converting it into Gaussians.<br>
+          We call this representation <strong><span style="color: orange;">Imagined Gaussians</span></strong>.
+        </p>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: nowrap;">
+          <div style="text-align: center; animation: igStep1 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/occupancy_filed.png" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong>Occupancy Field</strong></p>
+          </div>
+          <div style="animation: igStep2 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/arrow.png" style="height: 40px; width: auto;">
+          </div>
+          <div style="text-align: center; animation: igStep3 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/imagined_gaussians.png" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong><span style="color: orange;">Imagined Gaussians</span></strong></p>
+          </div>
+          <div style="animation: igStep4 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/arrow.png" style="height: 40px; width: auto;">
+          </div>
+          <div style="text-align: center; animation: igStep5 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/rendered_novelty_map.png" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong>Rendered Novelty Map</strong></p>
+          </div>
+        </div>
+
+        <p style="font-size: 17px; margin-top: 16px;">
+          Then the process of evaluating a camera pose can be simplified to predicting an occupancy field, converting it into <span style="color: orange;">Imagined Gaussians</span>, and then summing over the rendered pixels to instantly obtain the total coverage gain.
+        </p>
+
+        <p style="font-size: 18px; margin-top: 8px;">
+          <strong><span style="color: red;">❗ ~30x faster than original \(G(\mathbf{c})\) estimation!</span></strong>
+        </p>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: nowrap; margin-top: 24px;">
+          <div style="text-align: center; animation: igStep1 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/pose_0_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_0\)</strong></p>
+          </div>
+          <div style="animation: igStep2 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/arrow.png" style="height: 40px; width: auto;">
+          </div>
+          <div style="text-align: center; animation: igStep3 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/pose_5_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_1 > t_0\)</strong></p>
+          </div>
+          <div style="animation: igStep4 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/arrow.png" style="height: 40px; width: auto;">
+          </div>
+          <div style="text-align: center; animation: igStep5 4.5s ease infinite; opacity: 0;">
+            <img src="./assets/pose_99_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
+            <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_2 > t_1\)</strong></p>
+          </div>
+        </div>
+
+        <p style="font-size: 17px; margin-top: 16px;">
+          <strong>Evolution of <span style="color: orange;">Imagined Gaussians</span> Compared with Ground Truth Mesh.</strong>
+          The brighter the Gaussians, the higher their predicted occupancy. As exploration progresses (from left to right), our <span style="color: orange;">Imagined Gaussians</span> increasingly align with the ground truth mesh, demonstrating improved environmental modeling.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Total cycle: 4.5s (3s staggered fade-in + 1.5s hold) */
+/* 0.6/4.5=13.3%, 1.2/4.5=26.7%, 1.8/4.5=40%, 2.4/4.5=53.3%, 3.0/4.5=66.7% */
+@keyframes igStep1 {
+  0%    { opacity: 0; transform: translateX(-20px); }
+  13.3% { opacity: 1; transform: translateX(0); }
+  99%   { opacity: 1; transform: translateX(0); }
+  100%  { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes igStep2 {
+  0%    { opacity: 0; transform: translateX(-20px); }
+  13.3% { opacity: 0; transform: translateX(-20px); }
+  26.7% { opacity: 1; transform: translateX(0); }
+  99%   { opacity: 1; transform: translateX(0); }
+  100%  { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes igStep3 {
+  0%    { opacity: 0; transform: translateX(-20px); }
+  26.7% { opacity: 0; transform: translateX(-20px); }
+  40%   { opacity: 1; transform: translateX(0); }
+  99%   { opacity: 1; transform: translateX(0); }
+  100%  { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes igStep4 {
+  0%    { opacity: 0; transform: translateX(-20px); }
+  40%   { opacity: 0; transform: translateX(-20px); }
+  53.3% { opacity: 1; transform: translateX(0); }
+  99%   { opacity: 1; transform: translateX(0); }
+  100%  { opacity: 0; transform: translateX(-20px); }
+}
+@keyframes igStep5 {
+  0%    { opacity: 0; transform: translateX(-20px); }
+  53.3% { opacity: 0; transform: translateX(-20px); }
+  66.7% { opacity: 1; transform: translateX(0); }
+  99%   { opacity: 1; transform: translateX(0); }
+  100%  { opacity: 0; transform: translateX(-20px); }
+}
+</style>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px" id="sec-planning">Long-term Planning</h2>
+        <p style="font-size: 17px; margin-bottom: 16px;">
+          We uses beam search to efficiently explore the space of candidate trajectories and select the one with the highest expected coverage gain. The agent then executes the first \(N_f\) actions before replanning. For ablation studies on the planning phase, please refer to the main paper.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3" style="margin-top: -20px" id="sec-results">Results</h2>
+
+        <img src="./assets/macarons++.png" width="70%" style="margin-bottom: 16px;">
+
+        <div class="columns">
+          <div class="column">
+            <img src="./assets/mp3d-drone.png" style="width: 100%; height: 300px; object-fit: contain;">
+          </div>
+          <div class="column">
+            <img src="./assets/mp3d-wheeled.png" style="width: 100%; height: 300px; object-fit: contain;">
+          </div>
+        </div>
+
+        <p style="font-size: 17px; margin-top: 10px;">
+          <span class="depth">MAGICIAN</span> achieves state-of-the-art performance across diverse robot platforms and both indoor and outdoor environments.
+        </p>
+
+        <!-- Outdoor comparison (Pisa Cathedral) -->
+        <div style="margin-top: 24px;">
+          <p style="text-align: center; font-size: 15px; font-style: italic; color: gray; margin-bottom: 6px;">Pisa Cathedral</p>
+          <img src="./assets/comparisions/outdoor.png" width="100%">
+          <div style="display: flex; width: 100%; margin-top: 6px;">
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">FisherRF</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">MACARONS</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;"><span class="depth">MAGICIAN</span></div>
+          </div>
+        </div>
+
+        <!-- Indoor comparison (Barts) -->
+        <div style="margin-top: 24px;">
+          <p style="text-align: center; font-size: 15px; font-style: italic; color: gray; margin-bottom: 6px;">Barts</p>
+          <img src="./assets/comparisions/indoor.png" width="100%">
+          <div style="display: flex; width: 100%; margin-top: 6px;">
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">FisherRF</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">MACARONS</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;"><span class="depth">MAGICIAN</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered" id="sec-video" style="margin-bottom: 20px;">Video Comparisons</h2>
+      <div class="columns">
+        <div class="column">
+          <div class="video-container">
+            <video poster="" id="video1" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/comparisions/macarons.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2">Previous state of the art</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="video-container">
+            <video poster="" id="video2" autoplay controls muted loop height="100%" width="100%">
+              <source src="assets/comparisions/ours.mp4" type="video/mp4">
+            </video>
+            <p class="has-text-centered mt-2"><span class="depth">MAGICIAN</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div align="center" class="mt-4">
+    <p>Our long-term planning is more efficient and achieves more comprehensive exploration compared to short-sighted planning approaches.</p>
+  </div>
+  <br>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait for the page to be fully loaded
+    setTimeout(function() {
+      // Get video elements
+      const video1 = document.getElementById('video1');
+      const video2 = document.getElementById('video2');
+      const video3 = document.getElementById('video3');
+      const video4 = document.getElementById('video4');
+      
+      // Get control buttons for first pair
+      const playBtn1 = document.getElementById('play-btn1');
+      const pauseBtn1 = document.getElementById('pause-btn1');
+      const restartBtn1 = document.getElementById('restart-btn1');
+      
+      // Get control buttons for second pair
+      const playBtn3 = document.getElementById('play-btn3');
+      const pauseBtn3 = document.getElementById('pause-btn3');
+      const restartBtn3 = document.getElementById('restart-btn3');
+      
+      // Check if all elements exist
+      if (!video1 || !video2 || !video3 || !video4) {
+        console.error('One or more videos not found');
+        return;
+      }
+      
+      // Function to play first pair of videos
+      function playFirstPair() {
+        // Reset videos if they've ended
+        if (video1.ended) video1.currentTime = 0;
+        if (video2.ended) video2.currentTime = 0;
+        
+        // Make sure they're in sync before playing
+        video2.currentTime = video1.currentTime;
+        
+        // Play both videos with error handling
+        const promise1 = video1.play();
+        if (promise1 !== undefined) {
+          promise1.catch(error => {
+            console.log("Error playing video1:", error);
+          });
+        }
+        
+        const promise2 = video2.play();
+        if (promise2 !== undefined) {
+          promise2.catch(error => {
+            console.log("Error playing video2:", error);
+          });
+        }
+      }
+      
+      // Function to pause first pair of videos
+      function pauseFirstPair() {
+        video1.pause();
+        video2.pause();
+      }
+      
+      // Function to restart first pair of videos
+      function restartFirstPair() {
+        video1.currentTime = 0;
+        video2.currentTime = 0;
+        playFirstPair();
+      }
+      
+      // Function to play second pair of videos
+      function playSecondPair() {
+        // Reset videos if they've ended
+        if (video3.ended) video3.currentTime = 0;
+        if (video4.ended) video4.currentTime = 0;
+        
+        // Make sure they're in sync before playing
+        video4.currentTime = video3.currentTime;
+        
+        // Play both videos with error handling
+        const promise3 = video3.play();
+        if (promise3 !== undefined) {
+          promise3.catch(error => {
+            console.log("Error playing video3:", error);
+          });
+        }
+        
+        const promise4 = video4.play();
+        if (promise4 !== undefined) {
+          promise4.catch(error => {
+            console.log("Error playing video4:", error);
+          });
+        }
+      }
+      
+      // Function to pause second pair of videos
+      function pauseSecondPair() {
+        video3.pause();
+        video4.pause();
+      }
+      
+      // Function to restart second pair of videos
+      function restartSecondPair() {
+        video3.currentTime = 0;
+        video4.currentTime = 0;
+        playSecondPair();
+      }
+      
+      // Set up event listeners for first pair buttons
+      playBtn1.addEventListener('click', playFirstPair);
+      pauseBtn1.addEventListener('click', pauseFirstPair);
+      restartBtn1.addEventListener('click', restartFirstPair);
+      
+      // Set up event listeners for second pair buttons
+      playBtn3.addEventListener('click', playSecondPair);
+      pauseBtn3.addEventListener('click', pauseSecondPair);
+      restartBtn3.addEventListener('click', restartSecondPair);
+      
+      // Keep videos in sync during playback (first pair)
+      video1.addEventListener('timeupdate', function() {
+        // Sync only if the time difference is significant
+        if (Math.abs(video1.currentTime - video2.currentTime) > 0.3) {
+          video2.currentTime = video1.currentTime;
+        }
+      });
+      
+      // Keep videos in sync during playback (second pair)
+      video3.addEventListener('timeupdate', function() {
+        // Sync only if the time difference is significant
+        if (Math.abs(video3.currentTime - video4.currentTime) > 0.3) {
+          video4.currentTime = video3.currentTime;
+        }
+      });
+      
+      console.log('Custom video controls initialized');
+
+      // Force play hero videos
+      const heroV1 = document.getElementById('hero-video1');
+      const heroV2 = document.getElementById('hero-video2');
+      if (heroV1) heroV1.play().catch(() => {});
+      if (heroV2) heroV2.play().catch(() => {});
+
+    }, 1000);
+  });
+  </script>
+
+<!-- 
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title" style="margin-top: -10px">BibTeX</h2>
+    <pre><code>@inproceedings{
+      li2025nextbestpath,
+      title={NextBestPath: Efficient 3D Mapping of Unseen Environments},
+      author={Shiyao Li and Antoine Guedon and Cl{\'e}mentin Boittiaux and Shizhe Chen and Vincent Lepetit},
+      booktitle={The Thirteenth International Conference on Learning Representations},
+      year={2025},
+      url={https://openreview.net/forum?id=7WaRh4gCXp}
+      }</code></pre>
+  </div>
+</section> -->
+
+
+<!-- footnote -->
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+  <tr>
+    <td>
+      <br>
+      <p align="center">
+        <font size="2">
+          <a href="https://github.com/nerfies/nerfies.github.io">
+            <font size="2" color="lightgray">Inspired from awesome webpage template</font>
+          </a>
+          <br>
+        </font>
+      </p>
+      <br>
+    </td>
+  </tr>
+</table>
+
+
+</body>
+</html>
