@@ -63,53 +63,76 @@
       position: fixed;
       top: 120px;
       left: 16px;
-      width: 160px;
-      background: rgba(255,255,255,0.95);
+      width: 190px;
+      background: rgba(255,255,255,0.97);
       border-left: 3px solid #E040FB;
-      padding: 12px 14px;
+      padding: 12px 16px;
       border-radius: 6px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       z-index: 100;
-      font-size: 13px;
+      font-size: 15px;
     }
-    #toc p {
+    #toc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    #toc-header span {
       font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 13px;
+      font-size: 15px;
       color: #333;
     }
-    #toc a {
+    #toc-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #aaa;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    #toc-toggle:hover { color: #E040FB; }
+    #toc-links a {
       display: block;
       color: #555;
       text-decoration: none;
-      padding: 4px 0;
+      padding: 5px 0;
       border-radius: 3px;
       transition: color 0.2s;
     }
-    #toc a:hover, #toc a.active {
+    #toc-links a:hover, #toc-links a.active {
       color: #E040FB;
       font-weight: bold;
     }
+    #toc-links.collapsed { display: none; }
   </style>
 </head>
 <body>
 
 
 <div id="toc">
-  <p>Contents</p>
-  <a href="#sec-overview">Overview</a>
-  <a href="#sec-architecture">Architecture</a>
-  <a href="#sec-ig">Imagined Gaussians</a>
-  <a href="#sec-planning">Planning</a>
-  <a href="#sec-results">Results</a>
-  <a href="#sec-video">Video Comparisons</a>
-  <a href="#BibTeX">BibTeX</a>
+  <div id="toc-header">
+    <span>Contents</span>
+    <button id="toc-toggle" title="Collapse">−</button>
+  </div>
+  <div id="toc-links">
+    <a href="#sec-overview">Overview</a>
+    <a href="#sec-architecture">Architecture</a>
+    <a href="#sec-ig">Imagined Gaussians</a>
+    <a href="#sec-planning">Planning</a>
+    <a href="#sec-results">Results</a>
+    <a href="#sec-video">Video Comparisons</a>
+    <a href="#BibTeX">BibTeX</a>
+  </div>
 </div>
 
 <script>
+  // Scroll spy
   window.addEventListener('scroll', function() {
     const sections = ['sec-overview','sec-architecture','sec-ig','sec-planning','sec-results','sec-video','BibTeX'];
-    const links = document.querySelectorAll('#toc a');
+    const links = document.querySelectorAll('#toc-links a');
     let current = '';
     sections.forEach(id => {
       const el = document.getElementById(id);
@@ -120,6 +143,17 @@
     links.forEach(a => {
       a.classList.remove('active');
       if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+
+  // Collapse / expand
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('toc-toggle');
+    const links = document.getElementById('toc-links');
+    btn.addEventListener('click', function() {
+      const collapsed = links.classList.toggle('collapsed');
+      btn.textContent = collapsed ? '+' : '−';
+      btn.title = collapsed ? 'Expand' : 'Collapse';
     });
   });
 </script>
