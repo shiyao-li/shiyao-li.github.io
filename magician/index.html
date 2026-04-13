@@ -220,19 +220,27 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      color: rgba(255,255,255,0.55);
-      font-size: 12px;
-      letter-spacing: 0.1em;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       text-align: center;
       animation: bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-text {
+      animation: bw-fade 2s ease-in-out infinite;
+    }
+    @keyframes bw-fade {
+      0%   { color: #ffffff; }
+      50%  { color: #111111; }
+      100% { color: #ffffff; }
     }
     .scroll-hint .arrow {
       display: block;
       margin: 7px auto 0;
       width: 18px; height: 18px;
-      border-right: 1.5px solid rgba(255,255,255,0.5);
-      border-bottom: 1.5px solid rgba(255,255,255,0.5);
+      border-right: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
       transform: rotate(45deg);
     }
     @keyframes bounce {
@@ -448,7 +456,7 @@
     </div>
   </div>
   <div class="scroll-hint">
-    Scroll to explore
+    <strong class="scroll-text">Scroll to explore</strong>
     <span class="arrow"></span>
   </div>
 </section>
