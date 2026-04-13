@@ -107,6 +107,172 @@
       font-weight: bold;
     }
     #toc-links.collapsed { display: none; }
+
+    /* Full-page video hero */
+    .hero-video-bg {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #bg-video {
+      position: absolute;
+      top: 50%; left: 50%;
+      min-width: 100%; min-height: 100%;
+      width: auto; height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: transparent;
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    /* MAGICIAN big title */
+    .hero-title-magician {
+      font-family: 'Google Sans', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      line-height: 1;
+      background: linear-gradient(100deg, #d47fff 0%, #f06fff 40%, #ff9de2 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 18px rgba(224, 64, 251, 0.55));
+      margin-bottom: 0.5rem;
+    }
+
+    /* Paper subtitle */
+    .hero-subtitle {
+      font-family: 'Google Sans', sans-serif;
+      font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+      font-weight: 600;
+      color: #111111;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+
+    /* CVPR badge */
+    .hero-venue-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff6b00, #ff9a00);
+      border: none;
+      color: #ffffff;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 1.1rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-video-bg .author-names {
+      color: #1a3a6e !important;
+      font-weight: 700;
+    }
+    .hero-video-bg .author-names sup {
+      color: #1a3a6e !important;
+    }
+    .hero-video-bg .author-names a {
+      color: #1a3a6e !important;
+    }
+    .hero-video-bg .author-names a:hover {
+      color: #0d2147 !important;
+    }
+    .hero-video-bg .author-affiliations {
+      color: #4b5563 !important;
+      font-weight: 600;
+    }
+    .hero-video-bg .author-affiliations sup {
+      color: #4b5563 !important;
+    }
+    .hero-video-bg .button.is-dark {
+      background: rgba(0,0,0,0.55) !important;
+      border-color: rgba(0,0,0,0.7) !important;
+      color: #ffffff !important;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .hero-video-bg .button.is-dark:hover {
+      background: rgba(0,0,0,0.8) !important;
+      border-color: #000 !important;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-hint .arrow {
+      display: block;
+      margin: 7px auto 0;
+      width: 18px; height: 18px;
+      border-right: 1.5px solid rgba(255,255,255,0.5);
+      border-bottom: 1.5px solid rgba(255,255,255,0.5);
+      transform: rotate(45deg);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+      50% { transform: translateX(-50%) translateY(7px); opacity: 1; }
+    }
+
+    /* Hide TOC and Related Projects on hero, fade in after scroll */
+    #toc {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #toc.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #related-projects-nav {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #related-projects-nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    nav.navbar.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
@@ -118,6 +284,7 @@
     <button id="toc-toggle" title="Collapse">−</button>
   </div>
   <div id="toc-links">
+    <a href="#sec-demos">Demos</a>
     <a href="#sec-overview">Overview</a>
     <a href="#sec-architecture">Architecture</a>
     <a href="#sec-ig">Imagined Gaussians</a>
@@ -129,9 +296,20 @@
 </div>
 
 <script>
+  // Show/hide TOC and Related Projects based on hero scroll
+  function updateHeroVisibility() {
+    const heroHeight = window.innerHeight;
+    const pastHero = window.scrollY > heroHeight * 0.75;
+    document.getElementById('toc').classList.toggle('visible', pastHero);
+    document.getElementById('related-projects-nav').classList.toggle('visible', pastHero);
+    document.querySelector('nav.navbar').classList.toggle('visible', pastHero);
+  }
+
   // Scroll spy
   window.addEventListener('scroll', function() {
-    const sections = ['sec-overview','sec-architecture','sec-ig','sec-planning','sec-results','sec-video','BibTeX'];
+    updateHeroVisibility();
+
+    const sections = ['sec-demos','sec-overview','sec-architecture','sec-ig','sec-planning','sec-results','sec-video','BibTeX'];
     const links = document.querySelectorAll('#toc-links a');
     let current = '';
     sections.forEach(id => {
@@ -174,7 +352,7 @@
       </span>
       </a>
 
-      <div class="navbar-item has-dropdown is-hoverable">
+      <div id="related-projects-nav" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           Related Projects
         </a>
@@ -197,18 +375,19 @@
 
 <title>MAGICIAN</title>
 
-<section class="hero">
-  <div class="hero-body">
+<section class="hero hero-video-bg">
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="assets/video/ours_fushimi.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-body hero-content">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title"><span class="depth">MAGICIAN</span></h1>
-          <h2 class="title is-2 publication-title" style="margin-bottom: 0"><strong>Efficient Long-Term Planning with Imagined Gaussians for Active Mapping</strong></h2>
+          <div class="hero-title-magician">MAGICIAN</div>
+          <div class="hero-subtitle">Efficient Long-Term Planning with Imagined Gaussians for Active Mapping</div>
 
-          <div class="column is-full_width">
-          </div>
-          
-          <div class="is-size-5 publication-authors">
+          <div class="is-size-5 publication-authors author-names" style="margin-bottom: 0.6rem;">
             <span class="author-block">
               <a href="https://shiyao-li.github.io/">Shiyao Li</a><sup>1,2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
@@ -216,19 +395,16 @@
             <span class="author-block">
               <a href="https://cshizhe.github.io/">Shizhe Chen</a><sup>2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="author-block">
-              <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;<br>
-            </span>
+              <a href="https://vincentlepetit.github.io/">Vincent Lepetit</a><sup>1</sup></span>
           </div>
 
-          <!-- <br> -->
-
-          <div class="column is-full_width">
-            <h2 class="title is-3.5"><strong>CVPR 2026, Oral</strong></h2>
-          </div>
-
-          <div class="is-size-5 publication-authors">
+          <div class="is-size-5 publication-authors author-affiliations" style="margin-bottom: 1rem;">
             <span class="author-block"><sup>1</sup>Institut Polytechnique de Paris</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="author-block"><sup>2</sup>Inria</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Inria</span>
+          </div>
+
+          <div style="margin-bottom: 1.4rem;">
+            <span class="hero-venue-badge">CVPR 2026 &nbsp;·&nbsp; Oral</span>
           </div>
 
           <div class="column has-text-centered">
@@ -255,8 +431,8 @@
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="."
-                   class="external-link button is-normal is-rounded is-dark disabled">
+                <a href="https://huggingface.co/datasets/sli016/Macarons-plus-plus/tree/main"
+                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-database"></i>
                   </span>
@@ -266,31 +442,40 @@
             </div>
           </div>
 
-          <div class="columns mt-5">
-            <div class="column">
-              <video id="hero-video1" autoplay controls muted loop playsinline width="100%">
-                <source src="assets/video/ours_fushimi.mp4" type="video/mp4">
-              </video>
-              <p class="has-text-centered mt-2">Fushimi Castle</p>
-            </div>
-            <div class="column">
-              <video id="hero-video2" autoplay controls muted loop playsinline width="100%">
-                <source src="assets/video/ours_neuschwanstein.mp4" type="video/mp4">
-              </video>
-              <p class="has-text-centered mt-2">Neuschwanstein Castle</p>
-            </div>
-          </div>
-          <h2 class="subtitle has-text-centered" style="margin-top: 15px">
-            <b><span class="depth">MAGICIAN</span> enables long-term planning for active mapping through <span style="color: orange;">imagination</span>.</b>
-          </h2>
 
         </div>
       </div>
     </div>
   </div>
+  <div class="scroll-hint">
+    Scroll to explore
+    <span class="arrow"></span>
+  </div>
 </section>
 
 
+
+<section class="section" id="sec-demos">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Demos</h2>
+        <div class="mb-5">
+          <video autoplay controls muted loop playsinline width="100%">
+            <source src="assets/video/fushimi_magician.mp4" type="video/mp4">
+          </video>
+          <p class="has-text-centered mt-2">Fushimi Castle</p>
+        </div>
+        <div>
+          <video autoplay controls muted loop playsinline width="100%">
+            <source src="assets/video/Neuschwanstein_magician.mp4" type="video/mp4">
+          </video>
+          <p class="has-text-centered mt-2">Neuschwanstein Castle</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -724,20 +909,17 @@
   });
   </script>
 
-<!-- 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title" style="margin-top: -10px">BibTeX</h2>
-    <pre><code>@inproceedings{
-      li2025nextbestpath,
-      title={NextBestPath: Efficient 3D Mapping of Unseen Environments},
-      author={Shiyao Li and Antoine Guedon and Cl{\'e}mentin Boittiaux and Shizhe Chen and Vincent Lepetit},
-      booktitle={The Thirteenth International Conference on Learning Representations},
-      year={2025},
-      url={https://openreview.net/forum?id=7WaRh4gCXp}
-      }</code></pre>
+    <pre><code>@inproceedings{li2026magician,
+  author = "Shiyao Li and Antoine Guédon and Shizhe Chen and Vincent Lepetit",
+  title = {{MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping}},
+  booktitle = {{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}},
+  year = 2026
+}</code></pre>
   </div>
-</section> -->
+</section>
 
 
 <!-- footnote -->
@@ -746,11 +928,8 @@
     <td>
       <br>
       <p align="center">
-        <font size="2">
-          <a href="https://github.com/nerfies/nerfies.github.io">
-            <font size="2" color="lightgray">Inspired from awesome webpage template</font>
-          </a>
-          <br>
+        <font size="2" color="lightgray">
+          © 2026 Shiyao Li.
         </font>
       </p>
       <br>
