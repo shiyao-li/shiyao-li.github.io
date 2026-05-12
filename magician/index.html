@@ -588,21 +588,21 @@
         </p>
 
         <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: nowrap;">
-          <div style="text-align: center; animation: igStep1 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep1 6s ease infinite; opacity: 0;">
             <img src="./assets/occupancy_filed.png" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong>Occupancy Field</strong></p>
           </div>
-          <div style="animation: igStep2 4.5s ease infinite; opacity: 0;">
+          <div style="animation: igStep2 6s ease infinite; opacity: 0;">
             <img src="./assets/arrow.png" style="height: 40px; width: auto;">
           </div>
-          <div style="text-align: center; animation: igStep3 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep3 6s ease infinite; opacity: 0;">
             <img src="./assets/imagined_gaussians.png" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong><span style="color: orange;">Imagined Gaussians</span></strong></p>
           </div>
-          <div style="animation: igStep4 4.5s ease infinite; opacity: 0;">
+          <div style="animation: igStep4 6s ease infinite; opacity: 0;">
             <img src="./assets/arrow.png" style="height: 40px; width: auto;">
           </div>
-          <div style="text-align: center; animation: igStep5 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep5 6s ease infinite; opacity: 0;">
             <img src="./assets/rendered_novelty_map.png" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong>Rendered Novelty Map</strong></p>
           </div>
@@ -617,21 +617,21 @@
         </p>
 
         <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: nowrap; margin-top: 24px;">
-          <div style="text-align: center; animation: igStep1 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep1 6s ease infinite; opacity: 0;">
             <img src="./assets/pose_0_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_0\)</strong></p>
           </div>
-          <div style="animation: igStep2 4.5s ease infinite; opacity: 0;">
+          <div style="animation: igStep2 6s ease infinite; opacity: 0;">
             <img src="./assets/arrow.png" style="height: 40px; width: auto;">
           </div>
-          <div style="text-align: center; animation: igStep3 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep3 6s ease infinite; opacity: 0;">
             <img src="./assets/pose_5_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_1 > t_0\)</strong></p>
           </div>
-          <div style="animation: igStep4 4.5s ease infinite; opacity: 0;">
+          <div style="animation: igStep4 6s ease infinite; opacity: 0;">
             <img src="./assets/arrow.png" style="height: 40px; width: auto;">
           </div>
-          <div style="text-align: center; animation: igStep5 4.5s ease infinite; opacity: 0;">
+          <div style="text-align: center; animation: igStep5 6s ease infinite; opacity: 0;">
             <img src="./assets/pose_99_with_gt.jpg" style="height: 200px; width: auto; object-fit: contain;">
             <p style="margin-top: 8px; font-size: 15px;"><strong>Imagined Gaussians at \(t_2 > t_1\)</strong></p>
           </div>
@@ -651,38 +651,38 @@
 /* Total cycle: 4.5s (3s staggered fade-in + 1.5s hold) */
 /* 0.6/4.5=13.3%, 1.2/4.5=26.7%, 1.8/4.5=40%, 2.4/4.5=53.3%, 3.0/4.5=66.7% */
 @keyframes igStep1 {
-  0%    { opacity: 0; transform: translateX(-20px); }
-  13.3% { opacity: 1; transform: translateX(0); }
-  99%   { opacity: 1; transform: translateX(0); }
-  100%  { opacity: 0; transform: translateX(-20px); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  10%  { opacity: 1; transform: translateX(0); }
+  99%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
 }
 @keyframes igStep2 {
-  0%    { opacity: 0; transform: translateX(-20px); }
-  13.3% { opacity: 0; transform: translateX(-20px); }
-  26.7% { opacity: 1; transform: translateX(0); }
-  99%   { opacity: 1; transform: translateX(0); }
-  100%  { opacity: 0; transform: translateX(-20px); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  20%  { opacity: 0; transform: translateX(-20px); }
+  30%  { opacity: 1; transform: translateX(0); }
+  99%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
 }
 @keyframes igStep3 {
-  0%    { opacity: 0; transform: translateX(-20px); }
-  26.7% { opacity: 0; transform: translateX(-20px); }
-  40%   { opacity: 1; transform: translateX(0); }
-  99%   { opacity: 1; transform: translateX(0); }
-  100%  { opacity: 0; transform: translateX(-20px); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  30%  { opacity: 0; transform: translateX(-20px); }
+  40%  { opacity: 1; transform: translateX(0); }
+  99%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
 }
 @keyframes igStep4 {
-  0%    { opacity: 0; transform: translateX(-20px); }
-  40%   { opacity: 0; transform: translateX(-20px); }
-  53.3% { opacity: 1; transform: translateX(0); }
-  99%   { opacity: 1; transform: translateX(0); }
-  100%  { opacity: 0; transform: translateX(-20px); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  50%  { opacity: 0; transform: translateX(-20px); }
+  60%  { opacity: 1; transform: translateX(0); }
+  99%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
 }
 @keyframes igStep5 {
-  0%    { opacity: 0; transform: translateX(-20px); }
-  53.3% { opacity: 0; transform: translateX(-20px); }
-  66.7% { opacity: 1; transform: translateX(0); }
-  99%   { opacity: 1; transform: translateX(0); }
-  100%  { opacity: 0; transform: translateX(-20px); }
+  0%   { opacity: 0; transform: translateX(-20px); }
+  60%  { opacity: 0; transform: translateX(-20px); }
+  70%  { opacity: 1; transform: translateX(0); }
+  99%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-20px); }
 }
 </style>
 
@@ -735,6 +735,17 @@
         <div style="margin-top: 24px;">
           <p style="text-align: center; font-size: 15px; font-style: italic; color: gray; margin-bottom: 6px;">Barts</p>
           <img src="./assets/comparisions/indoor.png" width="100%">
+          <div style="display: flex; width: 100%; margin-top: 6px;">
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">FisherRF</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">MACARONS</div>
+            <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;"><span class="depth">MAGICIAN</span></div>
+          </div>
+        </div>
+
+        <!-- Indoor comparison (St. Sofia Church) -->
+        <div style="margin-top: 24px;">
+          <p style="text-align: center; font-size: 15px; font-style: italic; color: gray; margin-bottom: 6px;">St. Sofia Church</p>
+          <img src="./assets/comparisions/indoor_1.png" width="100%">
           <div style="display: flex; width: 100%; margin-top: 6px;">
             <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">FisherRF</div>
             <div style="flex: 1; text-align: center; font-size: 15px; font-weight: bold;">MACARONS</div>
